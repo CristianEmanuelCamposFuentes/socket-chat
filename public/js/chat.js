@@ -6,6 +6,11 @@ if (!username) {
   throw new Error('Username is required');
 }
 
+// Referencias HTML
+const lblStatusOnline = document.querySelector('#status-online');
+const lblStatusOffline = document.querySelector('#status-offline');
+
+
 const socket = io({
   auth: {
     token: 'ABC-123',
@@ -15,9 +20,11 @@ const socket = io({
 
 // Listeners
 socket.on('connect', () => {
-  console.log('Conectado');
+  lblStatusOnline.classList.remove('hidden');
+  lblStatusOffline.classList.add('hidden');
 });
 
 socket.on('disconnect', () => {
-  console.log('Desconectado');
+  lblStatusOnline.classList.add('hidden');
+  lblStatusOffline.classList.remove('hidden');
 });
