@@ -1,9 +1,9 @@
 import { join } from 'path';
 
 import { Module } from '@nestjs/common';
-import { ServeStaticModule } from '@nestjs/serve-static';
-
 import { ChatModule } from './chat/chat.module';
+
+import { ServeStaticModule } from '@nestjs/serve-static';
 @Module({
   imports: [
     ChatModule,

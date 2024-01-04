@@ -8,16 +8,24 @@ import { ChatService } from './chat.service';
 @WebSocketGateway()
 export class ChatGateway implements OnModuleInit {
   @WebSocketServer()
+  // eslint-disable-next-line prettier/prettier
   public server: Server;
 
   constructor(private readonly chatService: ChatService) {}
   onModuleInit() {
     // Necesito acceso al servidor de Websocket, escuchar conexiones nuevas
     this.server.on('connection', (socket: Socket) => {
-      console.log('Cliente conectado ', socket.id);
+      
+      const {name, token} = socket.handshake.auth;
+      console.log(name, token);
+
+      if(!name || !token) {
+        socket.disconnect();
+        return;
+      }
 
       socket.on('disconnect', () => {
-        console.log('Cliente desconectado', socket.id);
+          console.log('Cliente desconectado', socket.id);
       });
     });
   }
