@@ -1,4 +1,3 @@
-
 const username = localStorage.getItem('name');
 if (!username) {
   // Llevar al root de la aplicacion
@@ -10,6 +9,16 @@ if (!username) {
 const lblStatusOnline = document.querySelector('#status-online');
 const lblStatusOffline = document.querySelector('#status-offline');
 
+const usersUlElement = document.querySelector('ul');
+
+const renderUsers = (users) => {
+  usersUlElement.innerHTML = '';
+  users.forEach((user) => {
+    const liElement = document.createElement('li');
+    liElement.innerText = user.name;
+    usersUlElement.appendChild(liElement);
+  });
+};
 
 const socket = io({
   auth: {
@@ -28,3 +37,9 @@ socket.on('disconnect', () => {
   lblStatusOnline.classList.add('hidden');
   lblStatusOffline.classList.remove('hidden');
 });
+
+socket.on('welcome-message', (data) => {
+  console.log(data);
+});
+
+socket.on('on-clients-changed', renderUsers);

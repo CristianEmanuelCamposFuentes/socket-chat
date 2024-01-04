@@ -24,7 +24,17 @@ export class ChatGateway implements OnModuleInit {
         return;
       }
 
+      // Agregar cliente al listado
+      this.chatService.onClientConnected({id: socket.id, name: name});
+
+      // Mensaje de bienvenida
+      socket.emit('welcome-message', `Bienvenid@ ${name} al servidor!`);
+
+      // Listado de clientes conectados
+      this.server.emit('on-clients-changed', this.chatService.getClients());
+
       socket.on('disconnect', () => {
+        this.chatService.onclientDisconneced(socket.id);
           // console.log('Cliente desconectado', socket.id);
       });
     });
