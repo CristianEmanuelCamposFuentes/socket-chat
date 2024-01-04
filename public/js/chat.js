@@ -12,3 +12,12 @@ const socket = io({
     name: username,
   },
 });
+
+// Listeners
+socket.on('connect', () => {
+  console.log('Conectado');
+});
+
+socket.on('disconnect', () => {
+  console.log('Desconectado');
+});

@@ -19,13 +19,13 @@ export class ChatGateway implements OnModuleInit {
       const {name, token} = socket.handshake.auth;
       console.log(name, token);
 
-      if(!name || !token) {
+      if(!name) {
         socket.disconnect();
         return;
       }
 
       socket.on('disconnect', () => {
-          console.log('Cliente desconectado', socket.id);
+          // console.log('Cliente desconectado', socket.id);
       });
     });
   }
